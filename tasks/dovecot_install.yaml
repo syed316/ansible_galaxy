@@ -1,0 +1,22 @@
+- name: Install dovecot
+  package:
+    name: dovecot
+    state: present
+
+- name: Update dovecot configuration.
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+  loop:
+    - { src: '/etc/ansible/roles/postfix/templates/10-auth.conf.j2', dest: '/etc/dovecot/conf.d/10-auth.conf' }
+    - { src: '/etc/ansible/roles/postfix/templates/10-mail.conf.j2', dest: '/etc/dovecot/conf.d/10-mail.conf' }
+    - { src: '/etc/ansible/roles/postfix/templates/10-master.conf.j2', dest: '/etc/dovecot/conf.d/10-master.conf' }
+    - { src: '/etc/ansible/roles/postfix/templates/dovecot.conf.j2', dest: '/etc/dovecot/dovecot.conf' }
+    
+  notify: restart dovecot
+
+- name: Ensure dovecot is started and enabled at boot.
+  service:
+    name: dovecot
+    state: "{{ service_state }}"
+    enabled: "{{ service_enabled }}"

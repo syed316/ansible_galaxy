@@ -1,0 +1,9 @@
+---
+# defaults file for postfix
+postfix_config_file: /etc/postfix/main.cf
+
+service_state: started
+service_enabled: true
+
+postfix_myhostname: stmail01.stratos.xfusioncorp.com
+postfix_mydomain: stratos.xfusioncorp.com
